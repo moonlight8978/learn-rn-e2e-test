@@ -6,9 +6,10 @@ import { testProps } from '@src/utils';
 
 interface Props extends BaseComponentProps, Omit<InputProps, 'onChangeText' | 'onChange'> {
   onChange: InputProps['onChangeText'];
+  touched: boolean;
 }
 
-export default function TextInput({ value, onChange, testableID, ...rest }: Props) {
+export default function TextInput({ value, onChange, testableID, errorMessage, touched, ...rest }: Props) {
   const textValue = value?.toString() ?? value;
 
   return (
@@ -16,8 +17,9 @@ export default function TextInput({ value, onChange, testableID, ...rest }: Prop
       {...rest}
       onChangeText={onChange}
       value={textValue}
-      {...testProps(testableID)}
       containerStyle={{ paddingHorizontal: 0 }}
+      errorMessage={(touched && errorMessage) || undefined}
+      {...testProps(testableID)}
     />
   );
 }

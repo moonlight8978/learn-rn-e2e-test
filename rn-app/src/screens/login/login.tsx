@@ -2,15 +2,19 @@ import React, { Suspense } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Formik } from 'formik';
 import { useRecoilValue } from 'recoil';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { Button, Input, Text, useErrorHandler } from '@src/components';
-import { LoginForm } from '@src/types/local';
+import { LoginForm, RootStackParamList } from '@src/types/local';
 import { getSavedCredentials } from '@src/features/auth/auth.state';
+import { colors } from '@src/config';
 
 import { useLogic } from './useLogic';
 import { formInitialValues, validationSchema } from './form';
 
 function LoginScreen() {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Login'>>();
   const { error, login } = useLogic();
   const savedCredentials = useRecoilValue(getSavedCredentials);
 
@@ -39,7 +43,8 @@ function LoginScreen() {
               onBlur={handleBlur('username')}
               label="Username"
               testableID="usernameInput"
-              errorMessage={(touched.username && errors.username) || undefined}
+              errorMessage={errors.username}
+              touched={touched.username}
             />
 
             <Input.Text
@@ -49,7 +54,8 @@ function LoginScreen() {
               label="Password"
               secureTextEntry
               testableID="passwordInput"
-              errorMessage={(touched.password && errors.password) || undefined}
+              errorMessage={errors.password}
+              touched={touched.password}
             />
 
             <Input.Checkbox
@@ -65,6 +71,18 @@ function LoginScreen() {
               style={{ marginTop: 8 }}
               testableID="loginButton"
               disabled={!isValid}
+            />
+
+            <View style={{ marginTop: 8, marginBottom: 8, flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ flexGrow: 1, height: 1, backgroundColor: colors.black }} />
+              <Text>OR</Text>
+              <View style={{ flexGrow: 1, height: 1, backgroundColor: colors.black }} />
+            </View>
+
+            <Button
+              title="Create an account"
+              onPress={() => navigation.push('Registration')}
+              testableID="toRegistrationScreen"
             />
           </View>
         )}
