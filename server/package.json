@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@stoplight/prism-cli": "^4.1.2",
+    "http-server": "^0.12.3"
+  },
+  "scripts": {
+    "docs": "http-server -c-1 -p 3435 -o .",
+    "mock": "prism mock -h 0.0.0.0 -p 3434 ./openapi.yml"
+  }
+}
