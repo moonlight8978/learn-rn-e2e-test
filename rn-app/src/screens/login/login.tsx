@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import { useRecoilValue } from 'recoil';
 import { useNavigation } from '@react-navigation/native';
@@ -30,7 +30,7 @@ function LoginScreen() {
         onSubmit={login}
       >
         {({ values, handleChange, handleSubmit, isValid, errors, touched, handleBlur }) => (
-          <View style={{ paddingHorizontal: 12 }}>
+          <ScrollView style={{ paddingHorizontal: 12 }}>
             <Text style={{ alignSelf: 'center' }} size="large" bold testableID="loginScreen">
               Welcome
             </Text>
@@ -78,7 +78,7 @@ function LoginScreen() {
               onPress={() => navigation.replace('Registration')}
               testableID="login/toRegistrationScreenButton"
             />
-          </View>
+          </ScrollView>
         )}
       </Formik>
     </SafeAreaView>

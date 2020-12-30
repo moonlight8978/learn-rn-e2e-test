@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 
@@ -29,7 +29,7 @@ export default function RegistrationScreen() {
         onSubmit={register}
       >
         {({ values, isValid, touched, errors, handleChange, handleBlur, handleSubmit }) => (
-          <View style={{ paddingHorizontal: 12 }}>
+          <ScrollView style={{ paddingHorizontal: 12 }}>
             <Text size="large" bold style={{ alignSelf: 'center' }}>
               Join us
             </Text>
@@ -115,7 +115,7 @@ export default function RegistrationScreen() {
               onPress={() => navigation.replace('Login')}
               testableID="registration/toLoginScreenButton"
             />
-          </View>
+          </ScrollView>
         )}
       </Formik>
     </SafeAreaView>
