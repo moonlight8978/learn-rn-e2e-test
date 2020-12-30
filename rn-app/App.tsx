@@ -4,6 +4,7 @@ import { Host } from 'react-native-portalize';
 import { RecoilRoot } from 'recoil';
 
 import MainStack from '@src/features/main-stack';
+import AppLoading from '@src/features/app-loading';
 
 const App = () => {
   return (
@@ -13,6 +14,8 @@ const App = () => {
           <MainStack />
         </Host>
       </NavigationContainer>
+
+      <AppLoading />
     </RecoilRoot>
   );
 };
