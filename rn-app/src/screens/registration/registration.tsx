@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { Formik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
 
-import { Input, Text } from '@src/components';
-import { RegistrationForm } from '@src/types/local';
-import { Gender } from '@src/types/api.d';
+import { Button, Divider, Input, Text, useErrorHandler } from '@src/components';
+import { Navigation, RegistrationForm, Gender } from '@src/types';
+
+import { formInitialValues, validationSchema } from './form';
+import { useLogic } from './useLogic';
 
 export default function RegistrationScreen() {
+  const navigation = useNavigation<Navigation<'Registration'>>();
+  const { register, isRegistered, error } = useLogic();
+
+  useEffect(() => {
+    if (isRegistered) {
+      navigation.replace('RegistrationCompleted');
+    }
+  }, [isRegistered, navigation]);
+
+  useErrorHandler(error);
+
   return (
     <SafeAreaView>
-      <Formik<RegistrationForm> initialValues={{}} onSubmit={() => {}}>
+      <Formik<RegistrationForm>
+        initialValues={formInitialValues}
+        validationSchema={validationSchema}
+        onSubmit={register}
+      >
         {({ values, isValid, touched, errors, handleChange, handleBlur, handleSubmit }) => (
           <View style={{ paddingHorizontal: 12 }}>
             <Text size="large" bold style={{ alignSelf: 'center' }}>
@@ -29,25 +47,27 @@ export default function RegistrationScreen() {
               label="Password"
               value={values.password}
               onChange={handleChange('password')}
-              onBlur={handleChange('password')}
+              onBlur={handleBlur('password')}
               errorMessage={errors.password}
               touched={touched.password}
+              secureTextEntry
             />
 
             <Input.Text
               label="Password confirmation"
               value={values.passwordConfirmation}
               onChange={handleChange('passwordConfirmation')}
-              onBlur={handleChange('passwordConfirmation')}
+              onBlur={handleBlur('passwordConfirmation')}
               errorMessage={errors.passwordConfirmation}
               touched={touched.passwordConfirmation}
+              secureTextEntry
             />
 
             <Input.Text
               label="Full name"
               value={values.fullName}
               onChange={handleChange('fullName')}
-              onBlur={handleChange('fullName')}
+              onBlur={handleBlur('fullName')}
               errorMessage={errors.fullName}
               touched={touched.fullName}
             />
@@ -55,7 +75,7 @@ export default function RegistrationScreen() {
             <Input.Select
               label="Gender"
               value={values.gender}
-              onChange={handleChange('gender')}
+              onChange={(value) => handleChange({ target: { name: 'gender', value } })}
               onBlur={handleBlur('gender')}
               errorMessage={errors.gender}
               touched={touched.gender}
@@ -74,6 +94,12 @@ export default function RegistrationScreen() {
               errorMessage={errors.birthday}
               touched={touched.birthday}
             />
+
+            <Button title="Register" onPress={handleSubmit} disabled={!isValid} />
+
+            <Divider text="OR" />
+
+            <Button title="Login with existing account" onPress={() => navigation.replace('Login')} />
           </View>
         )}
       </Formik>

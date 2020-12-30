@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, ButtonProps } from 'react-native-elements';
 
-import { BaseComponentProps } from '@src/types/local';
+import { BaseComponentProps } from '@src/types';
 import { testProps } from '@src/utils';
 
 interface Props extends BaseComponentProps, ButtonProps {}

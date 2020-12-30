@@ -1,8 +1,7 @@
 import { atom, selector, useRecoilState, useResetRecoilState } from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { AuthInfo, LoginForm, User } from '@src/types/local';
-import { Gender } from '@src/types/api.d';
+import { AuthInfo, LoginForm, User, Gender } from '@src/types';
 
 export const authState = atom<{ isAuthenticated: boolean; authToken: string; tokenType: string; currentUser: User }>({
   key: 'authState',

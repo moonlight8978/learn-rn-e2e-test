@@ -2,11 +2,12 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useRecoilValue } from 'recoil';
 
-import LoginScreen from '@src/screens/login';
 import { getIsAuthenticated } from '@src/features/auth/auth.state';
+import { RootStackParamList } from '@src/types';
+import LoginScreen from '@src/screens/login';
 import TodoListScreen from '@src/screens/todo-list';
-import { RootStackParamList } from '@src/types/local';
 import RegistrationScreen from '@src/screens/registration';
+import RegistrationCompletedScreen from '@src/screens/registration-completed';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -21,6 +22,11 @@ export default function MainStack() {
         <>
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="RegistrationCompleted"
+            component={RegistrationCompletedScreen}
+            options={{ headerShown: false }}
+          />
         </>
       )}
     </Stack.Navigator>

@@ -1,11 +1,10 @@
 import React from 'react';
 import RNPickerSelect, { PickerSelectProps } from 'react-native-picker-select';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { withTheme } from 'react-native-elements';
 import { fonts } from 'react-native-elements/src/config';
 
-import { colors } from '@src/config';
 import Text from '../text';
 
 const styles = {
@@ -24,39 +23,46 @@ const styles = {
       },
     }),
   }),
+  error: (theme: any) => ({
+    margin: 5,
+    fontSize: 12,
+    color: theme.colors.error,
+  }),
 };
 
 const pickerStyle = (theme: any) => ({
-  // eslint-disable-next-line react-native/no-unused-styles
   inputIOS: {
     fontSize: 18,
+    height: 40,
+    justifyContent: 'center',
   },
-  // eslint-disable-next-line react-native/no-unused-styles
   inputAndroid: {
+    height: 40,
     fontSize: 18,
+    justifyContent: 'center',
   },
-  // eslint-disable-next-line react-native/no-unused-styles
   viewContainer: {
     borderBottomWidth: 1,
     borderColor: theme.colors.grey3,
   },
 });
 
-interface Props
-  extends Omit<
-    PickerSelectProps,
-    'onValueChange' | 'style' | 'Icon' | 'useNativeAndroidPickerStyle' | 'doneText' | 'placeholder'
-  > {
+interface Props extends Omit<PickerSelectProps, 'onChange'> {
   onChange: (value: any) => any;
   label: string;
   placeholder: string;
   accessibilityLabel: string;
   theme: any;
+  errorMessage?: string;
+  touched?: boolean;
+  onBlur: (e: any) => void;
 }
 
 const Caret = () => <Ionicons name="caret-down" style={styles.icon} />;
 
-function Select({ placeholder, onChange, label, theme, ...rest }: Props) {
+function Select({ placeholder, onChange, label, theme, touched, errorMessage, ...rest }: Props) {
+  const error = (touched && errorMessage) || null;
+
   return (
     <>
       <Text style={styles.label(theme)} bold>
@@ -66,12 +72,15 @@ function Select({ placeholder, onChange, label, theme, ...rest }: Props) {
       <RNPickerSelect
         {...rest}
         onValueChange={onChange}
+        // @ts-expect-error
         style={pickerStyle(theme)}
         Icon={Caret}
         useNativeAndroidPickerStyle={false}
         doneText="確定"
         placeholder={placeholder ? { label: placeholder, value: null } : {}}
       />
+
+      <Text style={styles.error(theme)}>{error}</Text>
     </>
   );
 }
@@ -82,4 +91,6 @@ Select.defaultProps = {
   style: undefined,
   containerStyle: undefined,
   placeholder: undefined,
+  touched: false,
+  errorMessage: '',
 } as Partial<Props>;

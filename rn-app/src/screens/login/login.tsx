@@ -3,18 +3,16 @@ import { SafeAreaView, View } from 'react-native';
 import { Formik } from 'formik';
 import { useRecoilValue } from 'recoil';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
-import { Button, Input, Text, useErrorHandler } from '@src/components';
-import { LoginForm, RootStackParamList } from '@src/types/local';
+import { Button, Divider, Input, Text, useErrorHandler } from '@src/components';
+import { LoginForm, Navigation } from '@src/types';
 import { getSavedCredentials } from '@src/features/auth/auth.state';
-import { colors } from '@src/config';
 
 import { useLogic } from './useLogic';
 import { formInitialValues, validationSchema } from './form';
 
 function LoginScreen() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'Login'>>();
+  const navigation = useNavigation<Navigation<'Login'>>();
   const { error, login } = useLogic();
   const savedCredentials = useRecoilValue(getSavedCredentials);
 
@@ -73,15 +71,11 @@ function LoginScreen() {
               disabled={!isValid}
             />
 
-            <View style={{ marginTop: 8, marginBottom: 8, flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ flexGrow: 1, height: 1, backgroundColor: colors.black }} />
-              <Text>OR</Text>
-              <View style={{ flexGrow: 1, height: 1, backgroundColor: colors.black }} />
-            </View>
+            <Divider text="OR" />
 
             <Button
               title="Create an account"
-              onPress={() => navigation.push('Registration')}
+              onPress={() => navigation.replace('Registration')}
               testableID="toRegistrationScreen"
             />
           </View>

@@ -1,3 +1,5 @@
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import { ApiLogin, ApiUser } from './api';
 
 export interface BaseComponentProps {
@@ -8,7 +10,10 @@ export type RootStackParamList = {
   Registration: undefined;
   Login: undefined;
   TodoList: undefined;
+  RegistrationCompleted: undefined;
 };
+
+export type Navigation<T extends keyof RootStackParamList> = StackNavigationProp<RootStackParamList, T>;
 
 export interface User {
   gender: ApiUser['gender'];

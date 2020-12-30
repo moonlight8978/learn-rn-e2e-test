@@ -3,21 +3,20 @@ import RNDateTimePicker, { ReactNativeModalDateTimePickerProps } from 'react-nat
 import { View } from 'react-native';
 import dayjs from 'dayjs';
 
-import { BaseComponentProps } from '@src/types/local';
+import { BaseComponentProps } from '@src/types';
 import { testProps } from '@src/utils';
 import Text from '../text';
 import { BaseTouchable } from '../button';
 
 import TextInput from './text-input';
-import { colors } from '@src/config';
 
 interface Props extends BaseComponentProps, Omit<ReactNativeModalDateTimePickerProps, 'onChange'> {
   onChange: ReactNativeModalDateTimePickerProps['onConfirm'];
   label: string;
   onBlur: (event: any) => void;
-  format?: (value: Date) => string;
-  initialValue?: Date;
-  value: Date | null;
+  format?: (value?: Date | null) => string;
+  initialValue?: Date | null;
+  value?: Date | null;
   errorMessage?: string;
   touched: boolean;
 }
@@ -66,7 +65,7 @@ export default function DatetimePicker({
           disabled
           errorMessage={errorMessage}
           touched={touched}
-          disabledInputStyle={{ color: colors.black }}
+          disabledInputStyle={{ opacity: 1 }}
         />
       </BaseTouchable>
 
@@ -78,7 +77,7 @@ export default function DatetimePicker({
         cancelTextIOS="Cancel"
         confirmTextIOS="OK"
         customHeaderIOS={HeaderIOS}
-        date={value || initialValue}
+        date={value || initialValue || undefined}
         {...testProps(testableID)}
       />
     </>
@@ -86,8 +85,8 @@ export default function DatetimePicker({
 }
 
 DatetimePicker.defaultProps = {
-  format: (date: Date) => dayjs(date).format('YYYY-MM-DD'),
+  format: (date?: Date) => date && dayjs(date).format('YYYY-MM-DD'),
   value: undefined,
-  initialValue: new Date(),
+  initialValue: undefined,
   onBlur: () => {},
 } as Partial<Props>;
