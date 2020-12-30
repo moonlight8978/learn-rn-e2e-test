@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Button, Divider, Input, Text, useErrorHandler } from '@src/components';
 import { LoginForm, Navigation } from '@src/types';
-import { getSavedCredentials } from '@src/features/auth/auth.state';
+import { savedCredentialsState } from '@src/features/auth/auth.state';
 
 import { useLogic } from './useLogic';
 import { formInitialValues, validationSchema } from './form';
@@ -14,7 +14,7 @@ import { formInitialValues, validationSchema } from './form';
 function LoginScreen() {
   const navigation = useNavigation<Navigation<'Login'>>();
   const { error, login } = useLogic();
-  const savedCredentials = useRecoilValue(getSavedCredentials);
+  const savedCredentials = useRecoilValue(savedCredentialsState);
 
   useErrorHandler(error);
 
@@ -24,7 +24,7 @@ function LoginScreen() {
         initialValues={{
           ...formInitialValues,
           username: savedCredentials.username,
-          isCredentialsSaved: !!savedCredentials.username,
+          isCredentialsSaved: savedCredentials.isCredentialsSaved,
         }}
         validationSchema={validationSchema}
         onSubmit={login}

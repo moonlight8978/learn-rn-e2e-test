@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const httpClient = axios.create({
   baseURL: 'http://10.0.15.94:3434',
@@ -9,7 +9,16 @@ const httpClient = axios.create({
   },
 });
 
-export default httpClient;
+const delay = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+
+const client = {
+  request: async (config: AxiosRequestConfig) => {
+    await delay(500);
+    return httpClient.request(config);
+  },
+};
+
+export default client;
 
 if (__DEV__) {
   httpClient.interceptors.request.use(

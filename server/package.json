@@ -9,6 +9,6 @@
   },
   "scripts": {
     "docs": "http-server -c-1 -p 3435 -o .",
-    "mock": "prism mock -h 0.0.0.0 -p 3434 ./openapi.yml"
+    "start": "prism mock -h 0.0.0.0 -p 3434 ./openapi.yml"
   }
 }
