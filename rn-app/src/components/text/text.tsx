@@ -1,7 +1,7 @@
 import { StyleProp, Text as RNText, TextProps, TextStyle } from 'react-native';
 import React, { ReactNode, useMemo } from 'react';
 
-import { BaseComponentProps } from '@src/types/local';
+import { BaseComponentProps } from '@src/types';
 import { testProps } from '@src/utils';
 
 interface Props extends BaseComponentProps, TextProps {

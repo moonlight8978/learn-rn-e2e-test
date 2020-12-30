@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 
-import { LoginForm } from '@src/types/local';
+import { LoginForm } from '@src/types';
 
 export const formInitialValues: LoginForm = {
   username: '',

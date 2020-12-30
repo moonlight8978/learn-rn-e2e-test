@@ -2,12 +2,14 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useRecoilValue } from 'recoil';
 
-import { screens } from '@src/config';
-import LoginScreen from '@src/screens/login';
 import { getIsAuthenticated } from '@src/features/auth/auth.state';
+import { RootStackParamList } from '@src/types';
+import LoginScreen from '@src/screens/login';
 import TodoListScreen from '@src/screens/todo-list';
+import RegistrationScreen from '@src/screens/registration';
+import RegistrationCompletedScreen from '@src/screens/registration-completed';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function MainStack() {
   const isAuthenticated = useRecoilValue(getIsAuthenticated);
@@ -15,9 +17,17 @@ export default function MainStack() {
   return (
     <Stack.Navigator>
       {isAuthenticated ? (
-        <Stack.Screen name={screens.names.todoList} component={TodoListScreen} />
+        <Stack.Screen name="TodoList" component={TodoListScreen} />
       ) : (
-        <Stack.Screen name={screens.names.login} component={LoginScreen} options={{ headerShown: false }} />
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+          <Stack.Screen
+            name="RegistrationCompleted"
+            component={RegistrationCompletedScreen}
+            options={{ headerShown: false }}
+          />
+        </>
       )}
     </Stack.Navigator>
   );

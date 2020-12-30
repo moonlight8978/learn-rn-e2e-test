@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { AuthApi } from '@src/api';
 import { clearSavedCredentials, saveCredentials, useAuthActions } from '@src/features/auth/auth.state';
-import { AuthInfo, LoginForm, User } from '@src/types/local';
+import { AuthInfo, LoginForm, User } from '@src/types';
+import { AuthApi } from '@src/api';
 
 export const useLogic = () => {
   const [error, setError] = useState(null);
