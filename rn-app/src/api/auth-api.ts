@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { LoginForm, ApiLogin, RegistrationForm } from '@src/types';
 
 import client from './client';
@@ -21,7 +23,7 @@ const register = (form: RegistrationForm) => {
       password: form.password,
       passwordConfirmation: form.passwordConfirmation,
       fullName: form.fullName,
-      birthday: form.birthday,
+      birthday: form.birthday ? dayjs(form.birthday).format('YYYY-MM-DD') : null,
       gender: form.gender,
     },
     url: '/register',
