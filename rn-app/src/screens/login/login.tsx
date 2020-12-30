@@ -40,7 +40,7 @@ function LoginScreen() {
               onChange={handleChange('username')}
               onBlur={handleBlur('username')}
               label="Username"
-              testableID="usernameInput"
+              testableID="login/usernameInput"
               errorMessage={errors.username}
               touched={touched.username}
             />
@@ -51,7 +51,7 @@ function LoginScreen() {
               onBlur={handleBlur('password')}
               label="Password"
               secureTextEntry
-              testableID="passwordInput"
+              testableID="login/passwordInput"
               errorMessage={errors.password}
               touched={touched.password}
             />
@@ -60,14 +60,14 @@ function LoginScreen() {
               value={values.isCredentialsSaved}
               onChange={(value) => handleChange({ target: { name: 'isCredentialsSaved', value } })}
               label="Save username"
-              testableID="isCredentialsSavedCheckbox"
+              testableID="login/isCredentialsSavedCheckbox"
             />
 
             <Button
               title="Login"
               onPress={handleSubmit}
               style={{ marginTop: 8 }}
-              testableID="loginButton"
+              testableID="login/loginButton"
               disabled={!isValid}
             />
 
@@ -76,7 +76,7 @@ function LoginScreen() {
             <Button
               title="Create an account"
               onPress={() => navigation.replace('Registration')}
-              testableID="toRegistrationScreen"
+              testableID="login/toRegistrationScreenButton"
             />
           </View>
         )}
