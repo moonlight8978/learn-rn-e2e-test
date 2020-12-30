@@ -6,6 +6,8 @@ import { withTheme } from 'react-native-elements';
 import { fonts } from 'react-native-elements/src/config';
 
 import Text from '../text';
+import { BaseComponentProps } from '@src/types';
+import { testProps } from '@src/utils';
 
 const styles = {
   icon: {
@@ -47,7 +49,7 @@ const pickerStyle = (theme: any) => ({
   },
 });
 
-interface Props extends Omit<PickerSelectProps, 'onChange'> {
+interface Props extends BaseComponentProps, Omit<PickerSelectProps, 'onChange'> {
   onChange: (value: any) => any;
   label: string;
   placeholder: string;
@@ -60,7 +62,7 @@ interface Props extends Omit<PickerSelectProps, 'onChange'> {
 
 const Caret = () => <Ionicons name="caret-down" style={styles.icon} />;
 
-function Select({ placeholder, onChange, label, theme, touched, errorMessage, ...rest }: Props) {
+function Select({ placeholder, onChange, label, theme, touched, errorMessage, testableID, ...rest }: Props) {
   const error = (touched && errorMessage) || null;
 
   return (
@@ -78,6 +80,9 @@ function Select({ placeholder, onChange, label, theme, touched, errorMessage, ..
         useNativeAndroidPickerStyle={false}
         doneText="確定"
         placeholder={placeholder ? { label: placeholder, value: null } : {}}
+        pickerProps={{ ...testProps(testableID) }}
+        touchableWrapperProps={{ ...testProps(`${testableID}-trigger`) }}
+        touchableDoneProps={{ ...testProps(`${testableID}-doneButton`) }}
       />
 
       <Text style={styles.error(theme)}>{error}</Text>

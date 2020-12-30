@@ -41,6 +41,7 @@ export default function RegistrationScreen() {
               onBlur={handleBlur('username')}
               errorMessage={errors.username}
               touched={touched.username}
+              testableID="registration/usernameInput"
             />
 
             <Input.Text
@@ -51,6 +52,7 @@ export default function RegistrationScreen() {
               errorMessage={errors.password}
               touched={touched.password}
               secureTextEntry
+              testableID="registration/passwordInput"
             />
 
             <Input.Text
@@ -61,6 +63,7 @@ export default function RegistrationScreen() {
               errorMessage={errors.passwordConfirmation}
               touched={touched.passwordConfirmation}
               secureTextEntry
+              testableID="registration/passwordConfirmationInput"
             />
 
             <Input.Text
@@ -70,6 +73,7 @@ export default function RegistrationScreen() {
               onBlur={handleBlur('fullName')}
               errorMessage={errors.fullName}
               touched={touched.fullName}
+              testableID="registration/fullNameInput"
             />
 
             <Input.Select
@@ -84,6 +88,7 @@ export default function RegistrationScreen() {
                 { value: Gender.female, label: 'Female' },
                 { value: Gender.unknown, label: 'Unknown' },
               ]}
+              testableID="registration/genderSelect"
             />
 
             <Input.Datetime
@@ -93,13 +98,23 @@ export default function RegistrationScreen() {
               onBlur={handleBlur('birthday')}
               errorMessage={errors.birthday}
               touched={touched.birthday}
+              testableID="registration/birthdaySelect"
             />
 
-            <Button title="Register" onPress={handleSubmit} disabled={!isValid} />
+            <Button
+              title="Register"
+              onPress={handleSubmit}
+              disabled={!isValid}
+              testableID="registration/registerButton"
+            />
 
             <Divider text="OR" />
 
-            <Button title="Login with existing account" onPress={() => navigation.replace('Login')} />
+            <Button
+              title="Login with existing account"
+              onPress={() => navigation.replace('Login')}
+              testableID="registration/toLoginScreenButton"
+            />
           </View>
         )}
       </Formik>

@@ -18,7 +18,11 @@ export default function RegistrationCompletedScreen() {
           <Text style={{ textAlign: 'center' }}>Press the below button to login.</Text>
         </View>
 
-        <Button title="Login" onPress={() => navigation.replace('Login')} />
+        <Button
+          title="Login"
+          onPress={() => navigation.replace('Login')}
+          testableID="registrationCompleted/toLoginScreenButton"
+        />
       </View>
     </SafeAreaView>
   );
