@@ -15,6 +15,7 @@ export const authState = atom<{ isAuthenticated: boolean; authToken: string; tok
       gender: Gender.male,
       birthday: null,
     },
+    isCredentialsSaved: false,
   },
 });
 
@@ -50,11 +51,26 @@ export const clearSavedCredentials = async () => {
   await AsyncStorage.removeItem('credentials/username');
 };
 
-export const getSavedCredentials = selector({
-  key: 'getSavedCredentials',
-  get: async () => {
+const _savedCredentialsState = atom({
+  key: '_savedCredentialsState',
+  default: false,
+});
+
+// @ts-expect-error
+export const savedCredentialsState = selector<LoginForm>({
+  key: 'savedCredentialsState',
+  get: async ({ get }) => {
+    const isSaved = get(_savedCredentialsState);
     const username = await AsyncStorage.getItem('credentials/username');
-    return { username: username || '' };
+    return { username: username || '', isCredentialsSaved: !!username || isSaved, password: '' };
+  },
+  set: ({ set }, form: LoginForm) => {
+    set(_savedCredentialsState, form.isCredentialsSaved);
+    if (form.isCredentialsSaved) {
+      AsyncStorage.setItem('credentials/username', form.username);
+    } else {
+      AsyncStorage.removeItem('credentials/username');
+    }
   },
 });
 
@@ -64,7 +80,8 @@ export const useAuthActions = () => {
 
   console.log(auth);
 
-  const loggedIn = (authInfo: AuthInfo, user: User) => setAuth({ ...auth, ...authInfo, currentUser: user });
+  const loggedIn = (authInfo: AuthInfo, user: User) =>
+    setAuth({ ...auth, ...authInfo, isAuthenticated: true, currentUser: user });
   const loggedOut = () => resetAuth();
   const setCurrentUser = (user: User) => setAuth({ ...auth, currentUser: user });
 

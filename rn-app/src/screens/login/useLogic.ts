@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { clearSavedCredentials, saveCredentials, useAuthActions } from '@src/features/auth/auth.state';
+import { savedCredentialsState, useAuthActions } from '@src/features/auth/auth.state';
 import { AuthInfo, LoginForm, User } from '@src/types';
 import { AuthApi } from '@src/api';
 import { getIsLoading, useLoadingActions } from '@src/features/app-loading/app-loading.state';
@@ -11,14 +11,11 @@ export const useLogic = () => {
   const { loggedIn } = useAuthActions();
   const isLoading = useRecoilValue(getIsLoading);
   const { finishLoading, startLoading } = useLoadingActions();
+  const saveCredentials = useSetRecoilState(savedCredentialsState);
 
   const login = async (form: LoginForm) => {
     startLoading();
-    if (form.isCredentialsSaved) {
-      await saveCredentials(form);
-    } else {
-      await clearSavedCredentials();
-    }
+    await saveCredentials(form);
 
     try {
       const { data } = await AuthApi.login(form);

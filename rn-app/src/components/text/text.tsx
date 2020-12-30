@@ -3,12 +3,7 @@ import React, { ReactNode, useMemo } from 'react';
 
 import { BaseComponentProps } from '@src/types';
 import { testProps } from '@src/utils';
-
-interface Props extends BaseComponentProps, TextProps {
-  size?: 'small' | 'medium' | 'large';
-  bold?: boolean;
-  children: ReactNode;
-}
+import { colors } from '@src/config';
 
 const fontSizes = {
   small: 14,
@@ -16,10 +11,17 @@ const fontSizes = {
   large: 18,
 };
 
-export default function Text({ testableID, size, style, bold, ...rest }: Props) {
+interface Props extends BaseComponentProps, TextProps {
+  size?: 'small' | 'medium' | 'large';
+  bold?: boolean;
+  children: ReactNode;
+  color?: string;
+}
+
+export default function Text({ testableID, size, style, bold, color, ...rest }: Required<Props>) {
   const styles = useMemo<StyleProp<TextStyle>>(
-    () => [style, { fontSize: fontSizes[size] }, { fontWeight: bold ? 'bold' : '400' }],
-    [size, style, bold]
+    () => [{ fontSize: fontSizes[size] }, { fontWeight: bold ? 'bold' : '400' }, { color: color }, style],
+    [size, style, bold, color]
   );
 
   return <RNText {...rest} {...testProps(testableID)} style={styles} />;
@@ -28,4 +30,5 @@ export default function Text({ testableID, size, style, bold, ...rest }: Props) 
 Text.defaultProps = {
   size: 'medium',
   bold: false,
+  color: colors.black,
 } as Partial<Props>;
