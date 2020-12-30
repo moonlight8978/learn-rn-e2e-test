@@ -9,20 +9,19 @@ servers:
 - url: http://localhost:3434
 tags:
 - name: auth
-- name: todo
 paths:
   /login:
     post:
       tags:
       - auth
       summary: Login
-      operationId: updatePet
+      operationId: login
       requestBody:
         description: Login form
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginForm'
+              $ref: '#/components/schemas/LoginRequestBody'
         required: true
       responses:
         200:
@@ -30,14 +29,37 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
-  # /todos:
-  #   get:
-  #     security:
-  #     - apiKey: []
+                $ref: '#/components/schemas/LoginResponseBody'
+  /register:
+    post:
+      tags:
+        - auth
+      summary: Registration
+      operationId: register
+      requestBody:
+        description: Register user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequestBody'
+      responses:
+        200:
+          description: OK
+
 components:
   schemas:
-    LoginForm:
+    fields.Gender:
+      type: integer
+      description: |
+        - 0: male
+        - 1: female
+        - 2: unknown
+      enum:
+        - 0
+        - 1
+        - 2
+      example: 0
+    LoginRequestBody:
       type: object
       properties:
         username:
@@ -47,7 +69,7 @@ components:
       required:
         - username
         - password
-    LoginResponse:
+    LoginResponseBody:
       type: object
       properties:
         username:
@@ -57,16 +79,7 @@ components:
           type: string
           example: "Dong Lao"
         gender:
-          type: integer
-          description: |
-            - 0: male
-            - 1: female
-            - 2: unknown
-          enum:
-            - 0
-            - 1
-            - 2
-          example: 0
+          $ref: '#/components/schemas/fields.Gender'
         birthday:
           type: string
           format: date
@@ -81,124 +94,36 @@ components:
           type: string
           description: Using `supersecret` as secret
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkRvbmcgTGFvIiwiaWF0IjoxNTE2MjM5MDIyfQ.fCRwg0Z-tUWDdyaVKVWnfAefrPhh8sc3TuX14HxaB74
-    Order:
+    RegistrationRequestBody:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-        petId:
-          type: integer
-          format: int64
-        quantity:
-          type: integer
-          format: int32
-        shipDate:
-          type: string
-          format: date-time
-        status:
-          type: string
-          description: Order Status
-          enum:
-          - placed
-          - approved
-          - delivered
-        complete:
-          type: boolean
-          default: false
-      xml:
-        name: Order
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-      xml:
-        name: Category
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
         username:
           type: string
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
+          example: username
         password:
           type: string
-        phone:
+          example: password
+        passwordConfirmation:
           type: string
-        userStatus:
-          type: integer
-          description: User Status
-          format: int32
-      xml:
-        name: User
-    Tag:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
+          example: password
+        fullName:
           type: string
-      xml:
-        name: Tag
-    Pet:
+          example: Full Name
+        gender:
+          $ref: '#/components/schemas/fields.Gender'
+        birthday:
+          type: string
+          format: date
+          example: '1997-12-18'
+          nullable: true
       required:
-      - name
-      - photoUrls
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        category:
-          $ref: '#/components/schemas/Category'
-        name:
-          type: string
-          example: doggie
-        photoUrls:
-          type: array
-          xml:
-            name: photoUrl
-            wrapped: true
-          items:
-            type: string
-        tags:
-          type: array
-          xml:
-            name: tag
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Tag'
-        status:
-          type: string
-          description: pet status in the store
-          enum:
-          - available
-          - pending
-          - sold
-      xml:
-        name: Pet
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
+        - username
+        - password
+        - passwordConfirmation
+        - fullName
+        - gender
+        - birthday
+
   securitySchemes:
     apiKey:
       type: apiKey

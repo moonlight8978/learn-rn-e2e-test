@@ -12,9 +12,9 @@ const httpClient = axios.create({
 const delay = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
 const client = {
-  request: async (config: AxiosRequestConfig) => {
+  request: async <T>(config: AxiosRequestConfig) => {
     await delay(500);
-    return httpClient.request(config);
+    return httpClient.request<T>(config);
   },
 };
 
