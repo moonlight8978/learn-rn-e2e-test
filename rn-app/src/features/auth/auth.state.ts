@@ -78,8 +78,6 @@ export const useAuthActions = () => {
   const [auth, setAuth] = useRecoilState(authState);
   const resetAuth = useResetRecoilState(authState);
 
-  console.log(auth);
-
   const loggedIn = (authInfo: AuthInfo, user: User) =>
     setAuth({ ...auth, ...authInfo, isAuthenticated: true, currentUser: user });
   const loggedOut = () => resetAuth();

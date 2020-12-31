@@ -28,7 +28,7 @@ export default function RegistrationScreen() {
         validationSchema={validationSchema}
         onSubmit={register}
       >
-        {({ values, isValid, touched, errors, handleChange, handleBlur, handleSubmit }) => (
+        {({ values, touched, errors, handleChange, handleBlur, handleSubmit }) => (
           <ScrollView style={{ paddingHorizontal: 12 }}>
             <Text size="large" bold style={{ alignSelf: 'center' }}>
               Join us
@@ -51,7 +51,6 @@ export default function RegistrationScreen() {
               onBlur={handleBlur('password')}
               errorMessage={errors.password}
               touched={touched.password}
-              secureTextEntry
               testableID="registration/passwordInput"
             />
 
@@ -62,7 +61,6 @@ export default function RegistrationScreen() {
               onBlur={handleBlur('passwordConfirmation')}
               errorMessage={errors.passwordConfirmation}
               touched={touched.passwordConfirmation}
-              secureTextEntry
               testableID="registration/passwordConfirmationInput"
             />
 
@@ -101,12 +99,7 @@ export default function RegistrationScreen() {
               testableID="registration/birthdaySelect"
             />
 
-            <Button
-              title="Register"
-              onPress={handleSubmit}
-              disabled={!isValid}
-              testableID="registration/registerButton"
-            />
+            <Button title="Register" onPress={handleSubmit} testableID="registration/registerButton" />
 
             <Divider text="OR" />
 
