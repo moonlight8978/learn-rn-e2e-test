@@ -10,6 +10,7 @@ import { getIsLoading } from './app-loading.state';
 const Backdrop = ({ children }: any) => (
   <View
     style={{ ...StyleSheet.absoluteFillObject, justifyContent: 'center', zIndex: 1, backgroundColor: colors.black40 }}
+    {...testProps('appLoadingSpinner')}
   >
     {children}
   </View>
@@ -24,12 +25,7 @@ export default function AppLoading() {
 
   return (
     <Backdrop>
-      <ActivityIndicator
-        size="large"
-        style={{ alignSelf: 'center' }}
-        color={colors.dodgerBlue}
-        {...testProps('appLoadingSpinner')}
-      />
+      <ActivityIndicator size="large" style={{ alignSelf: 'center' }} color={colors.dodgerBlue} />
     </Backdrop>
   );
 }

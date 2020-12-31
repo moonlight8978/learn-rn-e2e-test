@@ -20,6 +20,7 @@ export default function TextInput({ value, onChange, testableID, errorMessage, t
       containerStyle={{ paddingHorizontal: 0 }}
       errorMessage={(touched && errorMessage) || undefined}
       {...testProps(testableID)}
+      errorProps={testProps(`${testableID}-error`)}
     />
   );
 }

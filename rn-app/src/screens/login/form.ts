@@ -10,7 +10,7 @@ export const formInitialValues: LoginForm = {
 
 export const validationSchema = object({
   username: string()
-    .required('Please enter username!')
-    .matches(/^[\d|\w]+$/, 'Username must be alphabet and numbers!'),
+    .required('Please enter username')
+    .matches(/^[\d|\w]+$/, 'Username must be alphabet and numbers'),
   password: string().required('Please enter password'),
 });

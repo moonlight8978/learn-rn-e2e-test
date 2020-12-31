@@ -29,7 +29,7 @@ function LoginScreen() {
         validationSchema={validationSchema}
         onSubmit={login}
       >
-        {({ values, handleChange, handleSubmit, isValid, errors, touched, handleBlur }) => (
+        {({ values, handleChange, handleSubmit, errors, touched, handleBlur }) => (
           <ScrollView style={{ paddingHorizontal: 12 }}>
             <Text style={{ alignSelf: 'center' }} size="large" bold testableID="loginScreen">
               Welcome
@@ -50,7 +50,6 @@ function LoginScreen() {
               onChange={handleChange('password')}
               onBlur={handleBlur('password')}
               label="Password"
-              secureTextEntry
               testableID="login/passwordInput"
               errorMessage={errors.password}
               touched={touched.password}
@@ -63,13 +62,7 @@ function LoginScreen() {
               testableID="login/isCredentialsSavedCheckbox"
             />
 
-            <Button
-              title="Login"
-              onPress={handleSubmit}
-              style={{ marginTop: 8 }}
-              testableID="login/loginButton"
-              disabled={!isValid}
-            />
+            <Button title="Login" onPress={handleSubmit} style={{ marginTop: 8 }} testableID="login/loginButton" />
 
             <Divider text="OR" />
 
